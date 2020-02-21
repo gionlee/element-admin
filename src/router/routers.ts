@@ -29,6 +29,14 @@ export const routes =  [
             title: '上传',
             show: true
           }
+        },{
+          path:'/tree',
+          name: 'tree',
+          component: ()=> import('@/views/Tree.vue'),
+          meta: {
+            title: '树形',
+            show: true
+          }
         }
       ]
     },
