@@ -4,13 +4,16 @@
       @open="handleOpen"
       @close="handleClose"
       :collapse="isCollapse"
+      ref="menu"
+      router
+      :default-active="$route.path"
     >
       <el-menu-item class="logo-con">
             <img v-bind:src="isCollapse ? require('./../assets/mini-logo.jpg')  : require('./../assets/logo.jpg')">
       </el-menu-item>
-      <el-menu-item  v-for="(item,i) in navTagList" :key="i" :index="item.name"    v-on:click="menuNav(item)">
+      <el-menu-item  v-for="(item,i) in navTagList" :key="i" :index="item.path"  >
         <i class="el-icon-menu"></i>
-        <span slot="title">{{item.meta.title}}  {{item.path}}</span>
+        <span slot="title">{{item.meta.title}}</span>
       </el-menu-item>
     </el-menu>
 </template>
@@ -27,7 +30,6 @@ export default class Aside extends Vue {
     public isCollapse!: Boolean
     @State('navTagList') navTagList: any
     logoUrl = require('./../assets/logo.jpg')
-
     handleOpen() {
         console.log('it‘s open !');
     }
@@ -35,7 +37,6 @@ export default class Aside extends Vue {
         console.log('it‘s closed !');
     }
     menuNav(tag: any) {       
-        console.log(tag) 
         if(tag.path !== this.$route.path) {
             this.$router.push(tag)
         }
@@ -68,7 +69,7 @@ width: 200px;
 .logo-con img {
   max-width: 160px;
 }
-.el-menu-item {
+.el-menu-item:not(.is-active) {
     color: #fff;
 }
 .el-menu-item i {
