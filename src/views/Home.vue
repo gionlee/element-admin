@@ -25,19 +25,28 @@
   import {State, Mutation} from 'vuex-class';
   @Component({
     components: {
-      Header,
-      Aside,
-      Main,
+    	Header,
+    	Aside,
+    	Main,
     },
   }) 
   export default class Home extends Vue {
-    @Mutation('setNavTagList') setNavTagList: any
+	@Mutation('setMenuList') setMenuList: any
+    @State('navList') navList: any
+    @Mutation('setNavList') setNavList: any
     isCollapse: Boolean = false
     created() {
-      this.setNavTagList(getMenuByRouter(routes))
+		let navList = (getMenuByRouter(routes))
+		navList.forEach( (item: any) => {
+			if(item.path == this.$route.path && item.path !== '/') {
+				this.navList.push(item)
+			}
+		})
+		this.setMenuList(navList)
+		this.setNavList(this.navList)
     }
-    getCollapse(bol:Boolean) {
-        this.isCollapse = bol
+    public getCollapse(bol: boolean) {
+        this.isCollapse = bol;
     }
   }
 </script>

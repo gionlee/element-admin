@@ -5,13 +5,12 @@
       @close="handleClose"
       :collapse="isCollapse"
       ref="menu"
-      router
       :default-active="$route.path"
     >
       <el-menu-item class="logo-con">
             <img v-bind:src="isCollapse ? require('./../assets/mini-logo.jpg')  : require('./../assets/logo.jpg')">
       </el-menu-item>
-      <el-menu-item  v-for="(item,i) in navTagList" :key="i" :index="item.path"  >
+      <el-menu-item  v-for="(item,i) in menuList" v-if="item.meta.show" :key="i" :index="item.path" v-on:click="menuNav(item)"  >
         <i class="el-icon-menu"></i>
         <span slot="title">{{item.meta.title}}</span>
       </el-menu-item>
@@ -25,10 +24,13 @@ export default class Aside extends Vue {
     @Prop({
         type: Boolean,
         required: true,
-        default: false
+        default: false,
     })
     public isCollapse!: Boolean
-    @State('navTagList') navTagList: any
+    @State('menuList') menuList: any
+    @Mutation('setMenuList') setMenuList: any
+    @State('navList') navList: any
+    @Mutation('setNavList') setNavList: any
     logoUrl = require('./../assets/logo.jpg')
     handleOpen() {
         console.log('it‘s open !');
@@ -38,9 +40,19 @@ export default class Aside extends Vue {
     }
     menuNav(tag: any) {       
         if(tag.path !== this.$route.path) {
-            this.$router.push(tag)
+            let index = this.navList.findIndex( (item: any)=> {
+                return item.path ==tag.path
+            })
+            if(index === -1) {
+                this.navList.push(tag)
+            } 
+            this.setMenuList(this.menuList)
+            this.setNavList(this.navList)
+            this.$forceUpdate()
+            this.$nextTick( ()=> {
+                this.$router.push(tag)
+            })
         }
-        
     }
     
 }

@@ -4,12 +4,22 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    navTagList: [],
+    menuList: [],
+    navList:[{
+      path:'/',
+      name:'index',
+      meta: {
+        title: '首页'
+      }
+    }]
   },
   mutations: {
-    setNavTagList (state,value) {
-      state.navTagList = value
+    setMenuList (state,value) {
+      state.menuList = value
     },
+    setNavList (state,value) {
+      state.navList = value
+    }
   },
   actions: {
   },

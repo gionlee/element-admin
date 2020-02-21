@@ -10,7 +10,7 @@ export const routes =  [
           component: ()=> import('@/views/Index.vue'),
           meta: {
             title: '首页',
-            inNav: false
+            show: false
           }
         },
         {
@@ -19,7 +19,7 @@ export const routes =  [
           component: ()=> import('@/views/Docs.vue'),
           meta: {
             title: '文档',
-            inNav: false
+            show: true
           }
         },{
           path: '/upload',
@@ -27,7 +27,7 @@ export const routes =  [
           component: ()=> import('@/views/Upload.vue'),
           meta: {
             title: '上传',
-            inNav: false
+            show: true
           }
         }
       ]
