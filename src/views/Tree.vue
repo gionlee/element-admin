@@ -5,8 +5,8 @@
         draggable 
         :props="defaultProps" 
     >
-        <div slot-scope="{node,data}">
-            <span>{{node.label}}</span>{{data}}
+        <div slot-scope="{node}">
+            <span>{{node.label}}</span>
         </div>
     </el-tree>
 </template>
@@ -18,7 +18,7 @@ export default class Tree extends Vue{
           label: '一级 1',
           children: [{
             label: '二级 1-1',
-            children: [{
+            children: [{ 
               label: '三级 1-1-1'
             }]
           }]

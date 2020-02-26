@@ -41,7 +41,7 @@
 			if(item.path == this.$route.path && item.path !== '/') {
 				this.navList.push(item)
 			}
-		})
+    })
 		this.setMenuList(navList)
 		this.setNavList(this.navList)
     }

@@ -6,7 +6,7 @@
 export const getMenuByRouter = (list: any[],oldList?: any[]) => {
     let res = oldList || []
     list.forEach( (item: any) => {
-        if(item.children && item.children.length > 0) {
+        if(!item.meta) {
             getMenuByRouter(item.children,res)
         } else {
             res.push(item)

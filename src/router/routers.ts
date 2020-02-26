@@ -36,7 +36,16 @@ export const routes =  [
           meta: {
             title: '树形',
             show: true
+          },
+          children:[{
+            path:'/',
+          name: 'list',
+            component: ()=> import('@/views/Tree.vue'),
+            meta: {
+              title: '树形图',
+              show: true
           }
+          }]
         }
       ]
     },

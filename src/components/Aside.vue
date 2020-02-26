@@ -7,13 +7,29 @@
       ref="menu"
       :default-active="$route.path"
     >
+    
       <el-menu-item class="logo-con">
             <img v-bind:src="isCollapse ? require('./../assets/mini-logo.jpg')  : require('./../assets/logo.jpg')">
       </el-menu-item>
-      <el-menu-item  v-for="(item,i) in menuList" v-if="item.meta.show" :key="i" :index="item.path" v-on:click="menuNav(item)"  >
+      <template v-for="(item,i) in menuList">
+          <el-submenu v-if="item.children" :key="i" :index="item.path">
+                <template slot="title">
+                    <i class="el-icon-location"></i>
+                    <span>{{item.meta.title}}</span>
+                </template>
+            <el-menu-item-group  :key="item.name" >
+                <el-menu-item v-for="(citem,index) in item.children" :key="index" :index="item.path + citem.path" v-on:click="menuNav(citem,item.path)">
+                    <i class="el-icon-menu"></i>
+                    <span slot="title">{{citem.meta.title}}</span>
+                </el-menu-item>
+            </el-menu-item-group>
+    </el-submenu>
+      
+      <el-menu-item   v-else-if="item.meta.show" :key="i" :index="item.path" v-on:click="menuNav(item)"  >
         <i class="el-icon-menu"></i>
         <span slot="title">{{item.meta.title}}</span>
       </el-menu-item>
+      </template>
     </el-menu>
 </template>
 <script lang="ts">
@@ -32,18 +48,28 @@ export default class Aside extends Vue {
     @State('navList') navList: any
     @Mutation('setNavList') setNavList: any
     logoUrl = require('./../assets/logo.jpg')
+    mounted() {
+        console.log(this.menuList);
+    }
     handleOpen() {
-        console.log('it‘s open !');
     }
     handleClose() {
-        console.log('it‘s closed !');
     }
-    menuNav(tag: any) {       
-        if(tag.path !== this.$route.path) {
+    menuNav(tag: any,parentPath?: any) {       
+        if(tag.path !== this.$route.path || tag.path + parentPath !== this.$route.path) {
             let index = this.navList.findIndex( (item: any)=> {
+                if(parentPath) {
+                    return item.path == parentPath + tag.path
+                } else {
                 return item.path ==tag.path
+                }
             })
             if(index === -1) {
+                if (parentPath) {
+                    let data = JSON.parse(JSON.stringify(tag))
+                    data.path = parentPath +  data.path
+                    tag = data
+                }
                 this.navList.push(tag)
             } 
             this.setMenuList(this.menuList)
@@ -52,6 +78,7 @@ export default class Aside extends Vue {
             this.$nextTick( ()=> {
                 this.$router.push(tag)
             })
+            console.log('navList',this.navList)
         }
     }
     
@@ -85,6 +112,12 @@ width: 200px;
     color: #fff;
 }
 .el-menu-item i {
-    color: #fff;
+    color: #fff ;
+}
+.el-submenu__title *{
+    color: #fff !important;
+}
+.el-menu-item-group {
+    background: #515a6e;
 }
 </style>
