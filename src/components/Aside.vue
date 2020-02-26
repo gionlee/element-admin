@@ -18,7 +18,7 @@
                     <span>{{item.meta.title}}</span>
                 </template>
             <el-menu-item-group  :key="item.name" >
-                <el-menu-item v-for="(citem,index) in item.children" :key="index" :index="citem.path" v-on:click="menuNav(citem,item.path)">
+                <el-menu-item v-for="(citem,index) in item.children" :key="index" :index="citem.path" v-on:click="menuNav(citem)">
                     <i class="el-icon-menu"></i>
                     <span slot="title">{{citem.meta.title}}</span>
                 </el-menu-item>

@@ -5,7 +5,7 @@ export const routes =  [
       component: ()=> import('@/views/Home.vue'),
       children: [
         {
-          path:'/',
+          path:'',
           name:'index',
           component: ()=> import('@/views/Index.vue'),
           meta: {
@@ -32,17 +32,25 @@ export const routes =  [
         },{
           path:'/tree',
           name: 'tree',
-          component: ()=> import('@/views/Tree.vue'),
+          component: ()=> import('@/views/Tree-Panel.vue'),
           meta: {
             title: '树形',
             show: true
           },
           children:[{
-            path:'/',
+            path:'',
           name: 'list',
             component: ()=> import('@/views/Tree.vue'),
             meta: {
               title: '树形图',
+              show: true
+          }
+          },{
+            path:'diagram',
+          name: 'diagram',
+            component: ()=> import('@/views/Diagram.vue'),
+            meta: {
+              title: '关系图',
               show: true
           }
           }]

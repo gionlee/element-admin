@@ -41,9 +41,9 @@
 		navList.forEach( (item: any) => {
       if(item.children) {
         item.children.forEach((citem: any) => {
-          let navUrl = item.path + citem.path
+          let navUrl = item.path +'/'+citem.path
+          citem.path = navUrl
           if(navUrl == that.$route.path) {
-            citem.path = navUrl
             that.navList.push(citem)
           }
         });
