@@ -18,7 +18,7 @@
                     <span>{{item.meta.title}}</span>
                 </template>
             <el-menu-item-group  :key="item.name" >
-                <el-menu-item v-for="(citem,index) in item.children" :key="index" :index="item.path + citem.path" v-on:click="menuNav(citem,item.path)">
+                <el-menu-item v-for="(citem,index) in item.children" :key="index" :index="citem.path" v-on:click="menuNav(citem,item.path)">
                     <i class="el-icon-menu"></i>
                     <span slot="title">{{citem.meta.title}}</span>
                 </el-menu-item>
@@ -49,27 +49,17 @@ export default class Aside extends Vue {
     @Mutation('setNavList') setNavList: any
     logoUrl = require('./../assets/logo.jpg')
     mounted() {
-        console.log(this.menuList);
     }
     handleOpen() {
     }
     handleClose() {
     }
-    menuNav(tag: any,parentPath?: any) {       
-        if(tag.path !== this.$route.path || tag.path + parentPath !== this.$route.path) {
+    menuNav(tag: any) {       
+        if(tag.path !== this.$route.path) {
             let index = this.navList.findIndex( (item: any)=> {
-                if(parentPath) {
-                    return item.path == parentPath + tag.path
-                } else {
                 return item.path ==tag.path
-                }
             })
             if(index === -1) {
-                if (parentPath) {
-                    let data = JSON.parse(JSON.stringify(tag))
-                    data.path = parentPath +  data.path
-                    tag = data
-                }
                 this.navList.push(tag)
             } 
             this.setMenuList(this.menuList)
@@ -78,7 +68,6 @@ export default class Aside extends Vue {
             this.$nextTick( ()=> {
                 this.$router.push(tag)
             })
-            console.log('navList',this.navList)
         }
     }
     

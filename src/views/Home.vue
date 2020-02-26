@@ -36,9 +36,18 @@
     @Mutation('setNavList') setNavList: any
     isCollapse: Boolean = false
     created() {
+    let that = this;
 		let navList = (getMenuByRouter(routes))
 		navList.forEach( (item: any) => {
-			if(item.path == this.$route.path && item.path !== '/') {
+      if(item.children) {
+        item.children.forEach((citem: any) => {
+          let navUrl = item.path + citem.path
+          if(navUrl == that.$route.path) {
+            citem.path = navUrl
+            that.navList.push(citem)
+          }
+        });
+      }else if(item.path == this.$route.path && item.path !== '/') {
 				this.navList.push(item)
 			}
     })
