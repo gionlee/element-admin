@@ -7,7 +7,15 @@ export const getMenuByRouter = (list: any[],oldList?: any[]) => {
     let res = oldList || []
     list.forEach( (item: any) => {
         if(!item.meta) {
-            getMenuByRouter(item.children,res)
+            if(item.children.length == 1) {
+                let navTag = JSON.parse(JSON.stringify(item.children[0]))
+                let fPath =   item.path == '/' ? '' : item.path
+                let pathUrl = fPath + '/' + item.children[0].path
+                navTag.path = pathUrl
+                res.push(navTag)
+            } else {
+                getMenuByRouter(item.children,res)
+            }            
         } else {
             res.push(item)
         }
