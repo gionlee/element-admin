@@ -8,13 +8,13 @@
             首页
         </div>
         <div class="hd-user-ctrl">
-                <el-dropdown class="user-menu">
+                <el-dropdown class="user-menu" :hide-on-click="false">
                     <el-badge is-dot>
                         <img class="user-logo" src="./../assets/user-logo.jpg" alt="">
                     </el-badge>
                     <el-dropdown-menu slot="dropdown" >
                         <el-dropdown-item>我的消息</el-dropdown-item>
-                        <el-dropdown-item>退出登录</el-dropdown-item>
+                        <el-dropdown-item v-on:click.native="logout">退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
         </div>
@@ -29,6 +29,29 @@ export default class Header extends Vue {
     setCollapse () {
         this.isCollapse = !this.isCollapse
         this.send(this.isCollapse)
+    }
+    logout () {
+        this.$confirm('您确定退出登录?若有未完成的操作将不会保存！', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '退出登录成功!',
+            duration: 1000,
+            onClose: ()=> {
+                this.$router.push({
+                    path: '/login'
+                })
+            }
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删'
+          });          
+        });
     }
 }
 </script>

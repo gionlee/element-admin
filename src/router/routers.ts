@@ -1,9 +1,16 @@
 import Home from '@/views/Home.vue'
 export const routes = [
   {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/Login.vue'),
+    children:[]
+  },
+  {
     path: '/',
     name: 'home',
     component: Home,
+    redirect: 'index',
     children: [
       {
         path: 'index',
@@ -45,32 +52,33 @@ export const routes = [
       },
     }]
   }, {
-    path: '/tree',
-    name: 'tree',
+    path: '/map',
+    name: 'map',
     component: Home,
+    redirect: '/map/index',
     meta: {
-      title: '图示',
+      title: 'G6图示',
       show: true,
       icon: 'el-icon-s-marketing'
     },
-    children: [{
+    children: [ {
       path: 'index',
-      name: 'list',
-      component: () => import('@/views/Tree.vue'),
+      name: 'tutorial',
+      component: () => import('@/views/Tutorial.vue'),
       meta: {
-        title: '树形图',
+        title: '辅导图',
         show: true,
-        icon:'el-icon-s-operation'
+        icon: 'el-icon-edit-outline'
       }
-    }, {
-      path: 'diagram',
-      name: 'diagram',
-      component: () => import('@/views/Diagram.vue'),
+    },  {
+      path: 'mindmap',
+      name: 'mindmap',
+      component: () => import('@/views/MindMap.vue'),
       meta: {
-        title: '关系图',
+        title: '脑图',
         show: true,
-        icon: 'el-icon-share'
+        icon: 'el-icon-connection'
       }
-    }]
+    },]
   }
 ]

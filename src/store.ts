@@ -5,13 +5,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     menuList: [],
-    navList:[{
-      path:'/',
-      name:'index',
-      meta: {
-        title: '首页'
-      }
-    }]
+    navList:[]
   },
   mutations: {
     setMenuList (state,value) {
