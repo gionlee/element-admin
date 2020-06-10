@@ -22,7 +22,7 @@
     </div>
   </div>
 </template>
-<style lang="scss" >
+<style lang="scss" scoped >
 .wrap {
   width: 100%;
   height: 100%;
@@ -59,31 +59,53 @@
 </style>
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
+import Api from "@/data/mock-api";
+import { Form } from "element-ui";
+import http from "@/libs/request";
 @Component({})
 export default class Login extends Vue {
   public userInfo = {
-    name: "",
-    password: ""
+    name: "admin",
+    password: "123456"
   };
   public rules = {
     name: [{ required: true, message: "用户名不得为空", trigger: "blur" }],
     password: [{ required: true, message: "密码不得为空", trigger: "blur" }]
   };
+  private mounted() {
+    Api.Login;
+  }
   private login() {
     const that = this;
     (this.$refs.user as Vue & { validate: (valid: any) => boolean }).validate(
       (valid: any) => {
         if (valid) {
-          that.$message({
-            message: "登录成功,请稍等！",
-            type: "success",
-            duration: 1500,
-            onClose: () => {
-              that.$router.push({
-                path: "/index"
-              });
-            }
-          });
+          http({ url: "/user", method: "post", data: that.userInfo })
+            .then((res: any) => {
+              console.log(res);
+              if (res.data.result) {
+                that.$message({
+                  message: "登录成功,请稍等！",
+                  type: "success",
+                  duration: 1500,
+                  onClose: () => {
+                    that.$router.push({
+                      path: "/index"
+                    });
+                  }
+                });
+              } else {
+                that.$message({
+                  message: res.data.msg,
+                  type: "error",
+                  duration: 1500,
+                  onClose: () => {}
+                });
+              }
+            })
+            .catch((error: any) => {
+              console.log(error);
+            });
         }
       }
     );
