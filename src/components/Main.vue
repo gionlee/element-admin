@@ -25,24 +25,24 @@
 import {Component, Vue, Emit} from 'vue-property-decorator';
 import {State, Mutation} from 'vuex-class';
 @Component({})
-export default class Main extends Vue{
-    @State('menuList') menuList: any
-    @Mutation('setMenuList') setMenuList: any
-    @State('navList') navList: any
-    @Mutation('setNavList') setNavList: any
+export default class Main extends Vue {
+    @State('menuList') public menuList: any;
+    @Mutation('setMenuList') public setMenuList: any;
+    @State('navList') public navList: any;
+    @Mutation('setNavList') public setNavList: any;
     /**
      * 删除标签页
      */
-    updateTag(tag: any) {
-        let index = this.navList.findIndex( (item: any) => {
-            return item.path == tag.path
-        })
-        this.navList.splice(index,1)
-        this.setNavList(this.navList)
-         this.$router.push(this.navList[this.navList.length - 1])
+    public updateTag(tag: any) {
+        const index = this.navList.findIndex( (item: any) => {
+            return item.path == tag.path;
+        });
+        this.navList.splice(index, 1);
+        this.setNavList(this.navList);
+        this.$router.push(this.navList[this.navList.length - 1]);
     }
-    changTag(tag: any) {
-        this.$router.push(tag)
+    public changTag(tag: any) {
+        this.$router.push(tag);
     }
 }
 </script>

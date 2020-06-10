@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
   import Header from '@/components/Header.vue';
   import Aside from '@/components/Aside.vue';
   import Main from '@/components/Main.vue';
@@ -25,34 +25,34 @@
   import {State, Mutation} from 'vuex-class';
   @Component({
     components: {
-    	Header,
-    	Aside,
-    	Main,
+      Header,
+      Aside,
+      Main,
     },
-  }) 
+  })
   export default class Home extends Vue {
-	@Mutation('setMenuList') setMenuList: any
-    @State('navList') navList: any
-    @Mutation('setNavList') setNavList: any
-    isCollapse: Boolean = false
-    created() {
-    let that = this;
-		let navList = (getMenuByRouter(routes))
-		navList.forEach( (item: any) => {
-      if(item.children) {
+  @Mutation('setMenuList') public setMenuList: any;
+    @State('navList') public navList: any;
+    @Mutation('setNavList') public setNavList: any;
+    public isCollapse: Boolean = false;
+    public created() {
+    const that = this;
+      const navList = (getMenuByRouter(routes));
+      navList.forEach( (item: any) => {
+      if (item.children) {
         item.children.forEach((citem: any) => {
-          let navUrl = item.path +'/'+citem.path
-          citem.path = navUrl
-          if(navUrl == that.$route.path) {
-            that.navList.push(citem)
+          const navUrl = item.path + '/' + citem.path;
+          citem.path = navUrl;
+          if (navUrl == that.$route.path) {
+            that.navList.push(citem);
           }
         });
-      }else if(item.path == this.$route.path && item.path !== '/') {
-				this.navList.push(item)
-			}
-    })
-		this.setMenuList(navList)
-		this.setNavList(this.navList)
+      } else if (item.path == this.$route.path && item.path !== '/') {
+        this.navList.push(item);
+      }
+    });
+      this.setMenuList(navList);
+      this.setNavList(this.navList);
     }
     public getCollapse(bol: boolean) {
         this.isCollapse = bol;

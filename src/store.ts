@@ -1,21 +1,19 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from "vue";
+import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     menuList: [],
-    navList:[]
+    navList: [],
   },
   mutations: {
-    setMenuList (state,value) {
-      state.menuList = value
+    setMenuList(state, value) {
+      state.menuList = value;
     },
-    setNavList (state,value) {
-      state.navList = value
-    }
+    setNavList(state, value) {
+      state.navList = value;
+    },
   },
-  actions: {
-  },
+  actions: {},
 });
-  

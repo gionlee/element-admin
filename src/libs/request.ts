@@ -7,14 +7,14 @@ import axios, {
     Cancel,
     CancelToken,
     CancelTokenSource,
-    Canceler
-  } from 'axios'
-const config:AxiosRequestConfig = {
+    Canceler,
+  } from 'axios';
+const config: AxiosRequestConfig = {
   // baseURL: process.env.VUE_APP_BASE_API,
-  baseURL:'http://mock.gionlee.com',
+  baseURL: 'http://mock.gionlee.com',
   responseType: 'json',
   timeout: 5000,
-}
+};
 const handleResponse = (response: AxiosResponse) => {
   console.log(response.data);
   console.log(response.status);
@@ -32,9 +32,9 @@ const handleError = (error: AxiosError) => {
     console.log(error.message);
   }
 };
-const http: AxiosInstance = axios.create(config)
+const http: AxiosInstance = axios.create(config);
 http(config)
   .then(handleResponse)
   .catch(handleError);
 
-export default http
+export default http;

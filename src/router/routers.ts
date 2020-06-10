@@ -1,10 +1,10 @@
-import Home from '@/views/Home.vue'
+import Home from '@/views/Home.vue';
 export const routes = [
   {
     path: '/login',
     name: 'login',
     component: () => import('@/views/Login.vue'),
-    children:[]
+    children: [],
   },
   {
     path: '/',
@@ -18,10 +18,10 @@ export const routes = [
         component: () => import('@/views/Index.vue'),
         meta: {
           title: '首页',
-          show: false
-        }
+          show: false,
+        },
       },
-    ]
+    ],
   },
   {
     path: '/docs',
@@ -34,9 +34,9 @@ export const routes = [
       meta: {
         title: '文档',
         show: true,
-        icon: 'el-icon-document'
+        icon: 'el-icon-document',
       },
-    }]
+    }],
   }, {
     path: '/upload',
     name: 'upload',
@@ -48,9 +48,9 @@ export const routes = [
       meta: {
         title: '上传',
         show: true,
-        icon: 'el-icon-upload'
+        icon: 'el-icon-upload',
       },
-    }]
+    }],
   }, {
     path: '/map',
     name: 'map',
@@ -59,7 +59,7 @@ export const routes = [
     meta: {
       title: 'G6图示',
       show: true,
-      icon: 'el-icon-s-marketing'
+      icon: 'el-icon-s-marketing',
     },
     children: [ {
       path: 'index',
@@ -68,8 +68,8 @@ export const routes = [
       meta: {
         title: '辅导图',
         show: true,
-        icon: 'el-icon-edit-outline'
-      }
+        icon: 'el-icon-edit-outline',
+      },
     },  {
       path: 'mindmap',
       name: 'mindmap',
@@ -77,8 +77,24 @@ export const routes = [
       meta: {
         title: '脑图',
         show: true,
-        icon: 'el-icon-connection'
-      }
-    },]
-  }
-]
+        icon: 'el-icon-connection',
+      },
+    }],
+  },
+  {
+    path: '/editor',
+    name: 'editor',
+    component: Home,
+    children: [
+      {
+        path: 'index',
+        name: 'editor',
+        component: () => import('@/views/Editor.vue'),
+        meta: {
+          title: '富文本编辑器',
+          show: true,
+        },
+      },
+    ],
+  },
+];
