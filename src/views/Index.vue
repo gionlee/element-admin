@@ -1,4 +1,4 @@
-<template>
+<template v-loack>
   <div class="wrap">
     <el-row v-bind:gutter="20">
       <el-col v-for="(item,index) in tradeList" v-bind:key="index" v-bind:span="6">
@@ -12,13 +12,25 @@
           </div>
         </div>
       </el-col>
+      <el-col v-bind:span="24">
+        <div class="line_charts" id="line_charts"></div>
+      </el-col>
+      <el-col v-bind:span="8">
+        <div class="pie_charts" id="pie_charts"></div>
+      </el-col>
+      <el-col v-bind:span="8">
+        <div class="radar_charts" id="radar_charts"></div>
+      </el-col>
+      <el-col v-bind:span="8">
+        <div class="bar_charts" id="bar_charts"></div>
+      </el-col>
     </el-row>
-    <div class="line_charts" id="myEcharts"></div>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { State, Mutation } from "vuex-class";
+import API from "@/data/mock-api";
 import Echart from "echarts";
 import http from "@/libs/request";
 @Component({
@@ -81,7 +93,7 @@ export default class Main extends Vue {
     }
   ];
   public $echarts: any = Echart;
-  private options: object = {
+  private line_options: object = {
     title: {
       text: "折线图堆叠"
     },
@@ -133,16 +145,151 @@ export default class Main extends Vue {
       }
     ]
   };
-
-  public mounted() {
-    let el = document.getElementById("myEcharts") as HTMLCanvasElement;
-    el as any;
-    this.$nextTick(() => {
-      if (el) {
-        const chart: any = Echart.init(el);
-        chart.setOption(this.options);
+  private pie_options: any = {
+    title: {
+      text: "交易统计",
+      left: "center"
+    },
+    tooltip: {
+      trigger: "item",
+      formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+      type: "scroll",
+      orient: "vertical",
+      right: 10,
+      top: 20,
+      bottom: 20,
+      data: ["待入帐金额", "退款金额"]
+    },
+    series: [
+      {
+        name: "交易金额",
+        type: "pie",
+        radius: "50%",
+        center: ["45%", "50%"],
+        data: [
+          {
+            value: 0,
+            name: "待入帐金额"
+          },
+          {
+            value: 0,
+            name: "退款金额"
+          }
+        ],
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: "rgba(0, 0, 0, 0.5)"
+          }
+        }
       }
+    ]
+  };
+  private radar_options: object = {
+    title: {
+      text: "交易类型",
+      left: "center"
+    },
+    grid: {
+      // 控制图的大小，调整下面这些值就可以，
+      x: 40,
+      x2: 100,
+      y2: 150 // y2可以控制 X轴跟Zoom控件之间的间隔，避免以为倾斜后造成 label重叠到zoom上
+    },
+    tooltip: {},
+    radar: {
+      // shape: 'circle',
+      name: {
+        textStyle: {
+          color: "#fff",
+          backgroundColor: "#999",
+          borderRadius: 3,
+          padding: [3, 5]
+        }
+      },
+      indicator: [
+        { name: "销售", max: 6500 },
+        { name: "管理", max: 16000 },
+        { name: "信息技术", max: 30000 },
+        { name: "客服", max: 38000 },
+        { name: "研发", max: 52000 },
+        { name: "市场", max: 25000 }
+      ],
+      radius: "65%"
+    },
+    series: [
+      {
+        name: "预算 vs 开销",
+        type: "radar",
+
+        // areaStyle: {normal: {}},
+        data: [
+          {
+            value: [4300, 10000, 28000, 35000, 50000, 19000],
+            name: "预算分配"
+          },
+          {
+            value: [5000, 14000, 28000, 31000, 42000, 21000],
+            name: "实际开销"
+          }
+        ]
+      }
+    ]
+  };
+  private bar_options: object = {
+    title: {
+      text: "订单数量",
+      left: "center"
+    },
+    xAxis: {
+      type: "category",
+      data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+    },
+    yAxis: {
+      type: "value"
+    },
+    series: [
+      {
+        data: [120, 200, 150, 80, 70, 110, 130],
+        type: "bar"
+      }
+    ]
+  };
+  public created() {
+    API.EchartsLineData;
+    this.fnGetLineData();
+  }
+  public mounted() {}
+  private fnGetLineData() {
+    http({ url: "/echarts/line", method: "get" }).then(res => {
+      let tradeInfo = res.data.tradeInfo;
+      this.tradeList[0].count = tradeInfo.tradeNum;
+      this.tradeList[1].count = tradeInfo.tradeMoney;
+      this.tradeList[2].count = tradeInfo.tradeMoney - tradeInfo.refundMoney;
+      this.tradeList[3].count = tradeInfo.refundMoney;
+      this.pie_options.series[0].data[0].value =
+        tradeInfo.tradeMoney - tradeInfo.refundMoney;
+      this.pie_options.series[0].data[1].value = tradeInfo.refundMoney;
+      this.$forceUpdate();
+      this.fnDrawCharts();
     });
+  }
+  private fnDrawCharts() {
+    let line_el = document.getElementById("line_charts") as HTMLCanvasElement;
+    let pie_el = document.getElementById("pie_charts") as HTMLCanvasElement;
+    let radar_el = document.getElementById("radar_charts") as HTMLCanvasElement;
+    let bar_el = document.getElementById("bar_charts") as HTMLCanvasElement;
+    let line_charts: any = Echart.init(line_el);
+    let pie_charts: any = Echart.init(pie_el);
+    let radar_charts: any = Echart.init(radar_el);
+    let bar_charts: any = Echart.init(bar_el);
+    line_charts.setOption(this.line_options);
+    pie_charts.setOption(this.pie_options, true);
+    radar_charts.setOption(this.radar_options);
+    bar_charts.setOption(this.bar_options);
   }
 }
 </script>
@@ -180,8 +327,16 @@ export default class Main extends Vue {
   line-height: 20px;
   color: #666;
 }
-.line_charts {
+.line_charts,
+.pie_charts,
+.radar_charts,
+.bar_charts {
   height: 400px;
+  padding: 10px;
+  border-radius: 5px;
+  background: #fff;
+}
+.line_charts {
   margin: 30px 0;
 }
 </style>

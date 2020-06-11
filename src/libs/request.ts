@@ -1,18 +1,18 @@
 import axios, {
-    AxiosRequestConfig,
-    AxiosResponse,
-    AxiosError,
-    AxiosInstance,
-    AxiosAdapter,
-    Cancel,
-    CancelToken,
-    CancelTokenSource,
-    Canceler,
-  } from 'axios';
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosError,
+  AxiosInstance,
+  AxiosAdapter,
+  Cancel,
+  CancelToken,
+  CancelTokenSource,
+  Canceler,
+} from "axios";
 const config: AxiosRequestConfig = {
   // baseURL: process.env.VUE_APP_BASE_API,
-  baseURL: 'http://mock.gionlee.com',
-  responseType: 'json',
+  baseURL: "http://mock.gionlee.com",
+  responseType: "json",
   timeout: 5000,
 };
 const handleResponse = (response: AxiosResponse) => {

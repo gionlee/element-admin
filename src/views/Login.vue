@@ -59,7 +59,7 @@
 </style>
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import Api from "@/data/mock-api";
+import API from "@/data/mock-api";
 import { Form } from "element-ui";
 import http from "@/libs/request";
 @Component({})
@@ -73,7 +73,7 @@ export default class Login extends Vue {
     password: [{ required: true, message: "密码不得为空", trigger: "blur" }]
   };
   private mounted() {
-    Api.Login;
+    API.Login;
   }
   private login() {
     const that = this;
