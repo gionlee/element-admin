@@ -36,8 +36,12 @@ export default class Home extends Vue {
   @Mutation("setNavList") public setNavList: any;
   public isCollapse: Boolean = false;
   public created() {
+    // 设置头部导航栏显示
     const that = this;
     const navList = getMenuByRouter(routes);
+    if (this.navList.length == 0 && this.$route.path != navList[0].path) {
+      this.navList.push(navList[0]);
+    }
     navList.forEach((item: any) => {
       if (item.children) {
         item.children.forEach((citem: any) => {
@@ -51,6 +55,8 @@ export default class Home extends Vue {
         this.navList.push(item);
       }
     });
+    console.log(navList);
+    console.log(this.navList);
     this.setMenuList(navList);
     this.setNavList(this.navList);
   }
