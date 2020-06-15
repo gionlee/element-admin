@@ -55,8 +55,6 @@ export default class Home extends Vue {
         this.navList.push(item);
       }
     });
-    console.log(navList);
-    console.log(this.navList);
     this.setMenuList(navList);
     this.setNavList(this.navList);
   }

@@ -10,7 +10,7 @@ export const routes = [
     path: "/",
     name: "home",
     component: Home,
-    redirect: "index",
+    redirect: "login",
     children: [
       {
         path: "index",
