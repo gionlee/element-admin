@@ -9,6 +9,7 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "declarationMap": false,
     "sourceMap": false,
     "inlineSourceMap": false, // 生成单个 soucemaps 文件，而不是将 sourcemaps 生成不同的文件
     "inlineSources": false,

@@ -17,19 +17,10 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Header from "@/components/Header.vue";
-import Aside from "@/components/Aside.vue";
-import Main from "@/components/Main.vue";
 import { routes } from "@/router/routers";
 import { getMenuByRouter } from "@/libs/util";
 import { State, Mutation } from "vuex-class";
-@Component({
-  components: {
-    Header,
-    Aside,
-    Main
-  }
-})
+@Component({})
 export default class Home extends Vue {
   @Mutation("setMenuList") public setMenuList: any;
   @State("navList") public navList: any;

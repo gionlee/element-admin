@@ -28,7 +28,7 @@
   height: 100%;
   position: relative;
   background: url("~@/assets/login-bg.jpg");
-  background-size: 100%;
+  background-size: 100% 100%;
 }
 .login {
   position: absolute;

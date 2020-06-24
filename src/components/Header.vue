@@ -84,6 +84,7 @@ export default class Header extends Vue {
 .user-menu {
   width: 100px;
   text-align: center;
+  cursor: pointer;
 }
 .el-badge {
   height: 42px;
