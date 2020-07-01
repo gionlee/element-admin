@@ -74,4 +74,26 @@ export const routes = [
       },
     ],
   },
+  {
+    path: "/module",
+    name: "module",
+    component: Home,
+    meta: {
+      title: "模块",
+      show: true,
+      icon: "el-icon-s-grid",
+    },
+    children: [
+      {
+        path: "count_to",
+        name: "countto",
+        component: () => import("@/views/module/count_to.vue"),
+        meta: {
+          title: "数字渐变",
+          show: true,
+          icon: "el-icon-s-marketing",
+        },
+      },
+    ],
+  },
 ];
