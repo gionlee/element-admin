@@ -7,7 +7,15 @@
             <i v-bind:class="item.icon"></i>
           </div>
           <div class="trade_info">
-            <div class="trade_num">{{item.count | formatCount}}</div>
+            <div class="trade_num">
+              <Countup
+                :autoUpdate="autoUpdate"
+                :newCount="item.count * 1"
+                :defaultCount="item.count * 1"
+                :decimal="2"
+                v-bind:countEl="'_' + index"
+              ></Countup>
+            </div>
             <div class="trade_title">{{item.title}}</div>
           </div>
         </div>
@@ -65,31 +73,32 @@ import http from "@/libs/request";
   }
 })
 export default class Main extends Vue {
+  public autoUpdate = true;
   public nums = 1000;
   public title = "首页";
   public tradeList = [
     {
       icon: "el-icon-data-analysis",
       color: "#2d8cf0",
-      count: 1000,
+      count: 0,
       title: "交易笔数"
     },
     {
       icon: "el-icon-money",
       color: "#f4516c",
-      count: 1000.0,
+      count: 0,
       title: "交易金额"
     },
     {
       icon: "el-icon-document-add",
       color: "#19be6b",
-      count: 999.99,
+      count: 0,
       title: "待入帐金额"
     },
     {
       icon: "el-icon-document-remove",
       color: "#ed3f14",
-      count: 0.01,
+      count: 0,
       title: "退款金额"
     }
   ];
@@ -261,9 +270,10 @@ export default class Main extends Vue {
   };
   public created() {
     API.EchartsLineData;
+  }
+  public mounted() {
     this.fnGetLineData();
   }
-  public mounted() {}
   private fnGetLineData() {
     http({ url: "/echarts/line", method: "get" }).then(res => {
       let tradeInfo = res.data.tradeInfo;
