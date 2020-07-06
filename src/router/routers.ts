@@ -94,6 +94,16 @@ export const routes = [
           icon: "el-icon-s-marketing",
         },
       },
+      {
+        path: "editor_text",
+        name: "editortext",
+        component: () => import("@/views/module/editor_text.vue"),
+        meta: {
+          title: "富文本编辑器",
+          show: true,
+          icon: "el-icon-edit-outline",
+        },
+      },
     ],
   },
 ];

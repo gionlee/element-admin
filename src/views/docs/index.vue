@@ -1,13 +1,15 @@
 <template>
-    <h1>文档说明 
-    </h1>
+  <div>
+    <h1>文档说明</h1>
+  </div>
 </template>
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
-import {State, Mutation} from 'vuex-class';
+import { Component, Vue } from "vue-property-decorator";
+import { State, Mutation } from "vuex-class";
 @Component({})
 export default class Main extends Vue {
-    @State('menuList') public menuList: any;
-    @Mutation('setMenuList') public setMenuList: any;
+  @State("menuList") public menuList: any;
+  @Mutation("setMenuList") public setMenuList: any;
+  private mounted() {}
 }
 </script>
