@@ -6,8 +6,10 @@ import ElementUI from "element-ui";
 import "./styles.scss";
 const context = require.context("./components", true, /\.vue$/);
 context.keys().forEach((key) => {
-  console.log(context(key).default.name);
-  Vue.component(context(key).default.name, context(key).default);
+  if (!context(key).name) {
+    context(key).name = key.replace(/\.vue$/, "").replace(/^\.\//, "");
+  }
+  Vue.component(context(key).name, context(key).default);
 });
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
