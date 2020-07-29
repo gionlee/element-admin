@@ -41,37 +41,7 @@ import { State, Mutation } from "vuex-class";
 import API from "@/data/mock-api";
 import Echart from "echarts";
 import http from "@/libs/request";
-@Component({
-  filters: {
-    formatCount(value: any) {
-      let [pre, decimal, s1, s2] = ["", "", "", ""];
-      value = String(value);
-      s1 = value
-        .split(".")[0]
-        .split("")
-        .reverse()
-        .join("");
-      decimal = value.split(".")[1] || "";
-      if (isNaN(Number(s1[s1.length - 1]))) {
-        pre = s1[s1.length - 1];
-        s1 = s1.substring(0, s1.length - 1);
-      }
-      for (var i = 0, n = s1.length; i < n; i++) {
-        i % 3 == 0 && i > 0 && s1
-          ? (s2 += "," + (s1[i] || ""))
-          : (s2 += s1[i] || "");
-      }
-      return (
-        pre +
-        s2
-          .split("")
-          .reverse()
-          .join("") +
-        (decimal ? "." + decimal : "")
-      );
-    }
-  }
-})
+@Component({})
 export default class Main extends Vue {
   public autoUpdate = true;
   public nums = 1000;

@@ -15,14 +15,16 @@
       </el-tag>
     </div>
     <div class="main">
-      <!-- <keep-alive><keep-alive> -->
-      <router-view></router-view>
-      <!-- </keep-alive> -->
+      <keep-alive v-if="isload">
+        <router-view></router-view>
+      </keep-alive>
+      <!-- 
+      <router-view v-if="isload"></router-view>-->
     </div>
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Emit } from "vue-property-decorator";
+import { Component, Vue, Emit, Provide } from "vue-property-decorator";
 import { State, Mutation } from "vuex-class";
 @Component({})
 export default class Main extends Vue {
@@ -30,8 +32,10 @@ export default class Main extends Vue {
   @Mutation("setMenuList") public setMenuList: any;
   @State("navList") public navList: any;
   @Mutation("setNavList") public setNavList: any;
+  @Provide() reload = this.reloadRouter();
+  private isload = true;
   /**
-   * 删除标签页
+   * 删除、更新标签页
    */
   public updateTag(tag: any) {
     const index = this.navList.findIndex((item: any) => {
@@ -41,8 +45,21 @@ export default class Main extends Vue {
     this.setNavList(this.navList);
     this.$router.push(this.navList[this.navList.length - 1]);
   }
+  /**
+   * 路由跳转
+   */
   public changTag(tag: any) {
     this.$router.push(tag);
+  }
+  /**
+   * 重新加载页面
+   */
+  public reloadRouter() {
+    console.log("重新加载...");
+    this.isload = false;
+    this.$nextTick(function() {
+      this.isload = true;
+    });
   }
 }
 </script>
