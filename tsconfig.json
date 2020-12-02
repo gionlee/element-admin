@@ -1,4 +1,5 @@
 {
+  "devtool": "source-map-explorer",
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",

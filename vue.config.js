@@ -1,4 +1,7 @@
 module.exports = {
   baseUrl: './',
-  productionSourceMap: false,
+  productionSourceMap: true,
+  configureWebpack: {
+    devtool: 'hidden-source-map'
+  }
 }
