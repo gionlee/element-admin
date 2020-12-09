@@ -6,7 +6,15 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "analyz": "source-map-explorer 'dist/js/*.js'"
+    "analyz": "source-map-explorer 'dist/js/*.js'",
+    "postbuild": "react-snap"
+  },
+  "reactSnap": {
+    "source": "dist",
+    "minifyHtml": {
+      "collapseWhitespace": false,
+      "removeComments": false
+    }
   },
   "dependencies": {
     "@antv/g6": "^3.8.3",
